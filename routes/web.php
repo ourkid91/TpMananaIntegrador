@@ -11,9 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 
 Route::get('saludar/nombre/{nombre}/apellido/{apellido}', function ($nombre, $apellido) {
@@ -21,3 +18,15 @@ Route::get('saludar/nombre/{nombre}/apellido/{apellido}', function ($nombre, $ap
 });
 
 Route::get('bienvenido', 'InicioController@index');
+
+Route::get('listado/jedis', 'jediController@lista');
+
+Route::get('index', 'indexController@index');
+
+Route::get('usuarios','UsuarioController@listado');
+
+Route::get('miPerfil','PublicacionesController@lista');
+
+Route::get('usuarios/listado', 'PublicacionesController@index');
+
+Route::get('usuarios','UsuarioController@agregar');
