@@ -1,46 +1,3 @@
-<?php
-
-require_once('funciones.php');
-if (estaLogueado()) {
-header('location: perfil.php');
-exit;
-}
-
-$nombre = '';
-$apellido ='';
-$usuario = '';
-$email = '';
-$errores = [];
-$fecha ='';
-
-
-if ($_POST) {
-
-$nombre = trim($_POST['nombre']);
-
-$apellido = trim($_POST['apellido']);
-
-$usuario = trim($_POST['usuario']);
-
-$fecha = trim($_POST['fecha']);
-
-$email = trim($_POST['email']);
-
-
-
-$errores = validar($_POST);
-
-if (empty($errores)) {
-guardaPerfil('avatar');
-guardarUsuario($_POST);
-loguear($usuario);
-
-}else {
-
-}
-}
-?>
-
 
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -52,10 +9,10 @@ loguear($usuario);
 
 
     <title>Resgistrate a Good job</title>
-		
+
   </head>
   <body>
-<?php include('cabeza.php') ?>
+@extends('layouts.cabeza');
 <div class="transparencia">
 
 
@@ -66,32 +23,33 @@ loguear($usuario);
     <form class="" action="" method="POST" enctype="multipart/form-data">
       <div class="container contform">
         <div class="forma">
+          {{ csrf_field() }}
       <label>Nombre  </label>
-  <input type="text" name="nombre" value="<?php echo $nombre;?>" >
+  <input type="text" name="name" value="{{old('name')}}">
 
       <label>Apellido
-        <input type="text" name="apellido" value="<?php echo $apellido;?>" >
+        <input type="text" name="apellido" value="{{old('apellido')}}" >
       </label>
 
         <label>Usuario
-  <input type="text" name="usuario" value="<?php echo $usuario;?>" >
+  <input type="text" name="usuario" value="{{old('usuario')}}" >
 </label>
 </div>
 <div class="formb">
 
 
 <label>Correo Electronico
-  <input type="email" name="email" value="<?php echo $email;?>">
+  <input type="email" name="email" value="{{old('email')}}">
 </label>
 
 <br>
 <label>Fecha de nacimiento
-<input type="date" name="fecha" value="<?php echo $fecha;?>" min="1950-01-01" max="2019-01-01">
+<input type="date" name="fecha" value="{{old('fecha')}}" min="1950-01-01" max="2019-01-01">
 </label>
 </select>
 
   <label>Contraseña
-    <input type="password" name="pass" value="">
+    <input type="password" name="password" value="">
   </label>
 
 <label><p>Foto de perfil  </p></label> <br>
@@ -101,12 +59,6 @@ loguear($usuario);
 
   <button type="submit">Enviar</button>
 <div class="container">
-<?php
-foreach ($errores as $key => $value) {
-echo "<span> $value </span> <br>";
-}
-
-?>
 </div>
 
     </div>

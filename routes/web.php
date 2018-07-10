@@ -30,3 +30,7 @@ Route::get('miPerfil','PublicacionesController@lista');
 Route::get('usuarios/listado', 'PublicacionesController@index');
 
 Route::get('usuarios','UsuarioController@agregar');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

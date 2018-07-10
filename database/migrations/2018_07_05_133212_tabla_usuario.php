@@ -15,11 +15,11 @@ class TablaUsuario extends Migration
     {
       Schema::create ('usuarios', function (Blueprint $table){
         $table->increments('id');
-        $table->string('nombre');
+        $table->string('name');
         $table->string('apellido');
         $table->string('usuario');
         $table->string('email')->unique();
-        $table->string('pass');
+        $table->string('password');
         $table->dateTime('nacimiento');
         $table->string('foto_perfil')->nullable();
       });

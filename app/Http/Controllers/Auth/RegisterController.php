@@ -35,6 +35,9 @@ class RegisterController extends Controller
      *
      * @return void
      */
+
+
+
     public function __construct()
     {
         $this->middleware('guest');
@@ -46,25 +49,62 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
+
+
+    public function showRegistrationForm(){
+        return view('resgistrarte');
+
+
+    }
     protected function validator(array $data)
     {
+
+      
         return Validator::make($data, [
             'name' => 'required|string|max:255',
+            'apellido' => 'required|string|max:255',
+            'usuario' => 'required|string|max:255|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
+            'fecha' => 'date',
+            'avatar' => 'image',
             'password' => 'required|string|min:6|confirmed',
-        ]);
+        ],
+      [ 'name.required'=> 'El nombre es obligatorio',
+      'apellido.required'=> 'El apellido es obligatorio',
+      'usuario.required'=> 'El usuario es obligatorio',
+      'usuario.unique'=> 'Este usuario ya esta registrado',
+      'email.required'=> 'El email es obligatorio',
+      'email.unique'=> 'El email ya esta registrado',
+      'fecha.date'=> 'La fecha es necesaria',
+      'avatar.image'=> 'Ingresa una imagen valida',
+      'password.required'=> 'La contraseña es incorrecta',
+
+
+
+    ]);
     }
 
     /**
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @return \App\User
+     * @return \App\Modelo\Usuario
      */
-    protected function create(array $data)
+    protected function create(array $data, $file)
     {
+
+      $path = '';
+      if( $data['avatar'] ){
+        $imagenes = "";
+        $path = $data->file("avatar")->store($imagenes, 'public');
+
+      }
         return User::create([
             'name' => $data['name'],
+            'apellido' => $data['apellido'],
+            'usuario' => $data['usuario'],
+            'nacimientio' => $data['fecha'],
+            'foto_perfil' => $path,
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
