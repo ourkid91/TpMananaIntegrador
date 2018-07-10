@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -23,6 +24,13 @@
     <form class="" action="" method="POST" enctype="multipart/form-data">
       <div class="container contform">
         <div class="forma">
+
+            <ul>
+        @foreach ($errors->all() as $error)
+            <li>{{$error}}</li>
+
+          @endforeach
+          </ul>
           {{ csrf_field() }}
       <label>Nombre  </label>
   <input type="text" name="name" value="{{old('name')}}">
